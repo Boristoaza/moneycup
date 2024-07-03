@@ -3,52 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subir Foto de Perfil</title>
+    <title>Perfil de Usuario</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #f1f1f1;
             margin: 0;
-            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
-        .container {
+
+        .perfil-container {
             background-color: #fff;
             padding: 20px;
-            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 400px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        h1 {
+
+        .perfil-container h1 {
+            font-size: 24px;
             margin-bottom: 20px;
         }
-        input[type="file"] {
+
+        .perfil-container img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
             margin-bottom: 20px;
         }
+
+        .perfil-container p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .perfil-container input[type="file"] {
+            display: block;
+            margin: 0 auto 20px auto;
+        }
+
         button {
-            background-color: #007BFF;
-            color: #fff;
-            border: none;
+            background-color: #04AA6D;
+            color: white;
             padding: 10px 20px;
-            border-radius: 4px;
+            border: none;
             cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
         }
+
         button:hover {
-            background-color: #0056b3;
+            opacity: 1;
+        }
+        .puntaje{
+            background-color: #04AA6D;
+            width: 100px;
+            height: 100px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Subir Foto de Perfil</h1>
-        <form action="{% url 'perfil' %}" method="POST" enctype="multipart/form-data">
+    <div class="perfil-container">
+        <h1>Perfil de {{ datos_usuario.nombre }}</h1>
+        {% if foto_url %}
+            <img src="{{ foto_url }}" alt="Foto de {{ datos_usuario.nombre }}">
+        {% else %}
+            <p>No hay foto disponible</p>
+        {% endif %}
+        <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="file" name="file" required>
-            <br>
-            <button type="submit">Subir Foto</button>
+            <input type="file" name="photo" accept="image/*">
+            <button type="submit">Subir nueva foto</button>
         </form>
     </div>
+    <section class="puntajes">
+        <div class="puntaje">
+            <h1>hola soy el puntaje </h1>
+        </div>
+    </section>
 </body>
 </html>

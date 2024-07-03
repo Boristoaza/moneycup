@@ -1,4 +1,3 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,106 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-size: cover;
+            background-position: center;
         }
-        
+
         .login-container {
-            background-color: #ffffff;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            width: 400px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            max-width: 350px;
-            width: 100%;
-            box-sizing: border-box;
         }
-        
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 1.5rem;
-            color: #333333;
-        }
-        
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 8px;
-            color: #333333;
-        }
-        
-        input[type="email"],
-        input[type="password"] {
+
+        input[type=email], input[type=password] {
             width: 100%;
             padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #cccccc;
-            border-radius: 3px;
-            box-sizing: border-box;
-            font-size: 14px;
+            margin: 5px 0 15px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            background: #f1f1f1;
         }
-        
+
+        input[type=email]:focus, input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* Set a style for all buttons */
         button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: #ffffff;
+            background-color: #04AA6D;
+            color: white;
+            padding: 10px 20px;
+            margin: 8px 0;
             border: none;
-            border-radius: 3px;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
-            transition: background-color 0.3s;
+            width: 100%;
+            opacity: 0.9;
         }
-        
+
         button:hover {
-            background-color: #0056b3;
+            opacity: 1;
         }
-        
-        .message {
-            text-align: center;
-            color: #ff0000;
-            margin-top: 10px;
+
+        .clearfix::after {
+            content: "";
+            clear: both;
+            display: table;
         }
-        
-        .message.success {
-            color: #28a745;
+
+        @media screen and (max-width: 300px) {
+            button {
+                width: 100%;
+                float: none;
+                margin: 0;
+            }
+        }
+        .puntaje{
+            background-color: blue;
+            width: 100%;
+            height: 100%;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        
-        <!-- {% if messages %}
-            {% for message in messages %}
-                <div class="message {% if message.tags == 'error' %}error{% elif message.tags == 'success' %}success{% endif %}">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %} -->
-        
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
-                <label for="correo">Correo electrónico:</label><br>
+                <label for="correo">Correo electrónico:</label>
                 <input type="email" id="correo" name="correo" required>
             </div>
-            
             <div class="form-group">
-                <label for="contrasenia">Contraseña:</label><br>
+                <label for="contrasenia">Contraseña:</label>
                 <input type="password" id="contrasenia" name="contrasenia" required>
             </div>
-            
-            <button type="submit">Iniciar Sesión</button>
+            <div class="clearfix">
+                <button type="submit">Iniciar Sesión</button>
+            </div>
         </form>
     </div>
 </body>

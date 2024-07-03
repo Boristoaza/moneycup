@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Perfil de Usuarios</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #fff;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        li:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .usuario-clave {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        .usuario-valor {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estos son los usuarios:</h1>
+    <p>Total de usuarios: {{ total_usuarios }}</p>
+    <ul>
+        {% for usuario in usuarios %}
+            <li>
+                {% for key, val in usuario.items %}
+                    <span class="usuario-clave">{{ key }}:</span> 
+                    <span class="usuario-valor">{{ val }}</span>
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
