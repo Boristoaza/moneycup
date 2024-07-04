@@ -5,7 +5,7 @@ Repo URL: [https://github.com/Boristoaza/moneycup.git]
 ## Descripción
 Moneycup es un proyecto que utiliza diversas bibliotecas y herramientas para su desarrollo y funcionamiento.
 
-## USAR EL Proyecto 
+## levanrar el proyecto 
 activar el entorno virtual 
 instalar django , version 4.1.2
 instalar pyrebase4 , version 4.8.0
