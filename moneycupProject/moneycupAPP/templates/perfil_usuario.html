@@ -1,56 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Perfil de Usuarios</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuarios para el admin</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
         }
-        h1 {
-            color: #4CAF50;
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
         }
-        p {
-            font-size: 1.2em;
+        #user-form {
+            margin: 30px 0;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        #user-form input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            margin-right: 5px;
         }
-        li {
-            background: #fff;
-            margin: 10px 0;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        #user-form input[type="submit"] {
+            padding: 10px 20px;
         }
-        li:nth-child(even) {
-            background: #f9f9f9;
+        .user-list {
+            margin: 20px 0;
         }
-        .usuario-clave {
+        .user-item {
+            background: #f4f4f4;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+        }
+        .user-photo {
+            max-width: 100px;
+            height: auto;
+        }
+        .total-usuarios {
             font-weight: bold;
-            color: #4CAF50;
-        }
-        .usuario-valor {
-            margin-left: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Estos son los usuarios:</h1>
-    <p>Total de usuarios: {{ total_usuarios }}</p>
-    <ul>
-        {% for usuario in usuarios %}
-            <li>
-                {% for key, val in usuario.items %}
-                    <span class="usuario-clave">{{ key }}:</span> 
-                    <span class="usuario-valor">{{ val }}</span>
+    <div class="container">
+        <h1>Perfil de Usuarios para el admin</h1>
+        
+        <form id="user-form" method="GET" action="">
+            <input type="text" name="buscar" placeholder="Buscar usuario...">
+            <input type="submit" value="Buscar">
+        </form>
+
+        <div class="user-list">
+            {% if usuarios %}
+                {% for usuario in usuarios %}
+                    <div class="user-item">
+                        <form method="POST" action="">
+                            {% csrf_token %}
+                            {% for key, value in usuario.items %}
+                                <input type="hidden" name="usuario_id" value="{{ key }}">
+                                <label><strong>Apodo:</strong></label>
+                                <input type="text" name="apodo" value="{{ value.apodo }}"><br>
+                                <label><strong>Nombre:</strong></label>
+                                <input type="text" name="nombre" value="{{ value.nombre }}"><br>
+                                <label><strong>Número:</strong></label>
+                                <input type="text" name="numero" value="{{ value.numero }}"><br>
+                                <label><strong>URL de la foto:</strong></label>
+                                <input type="text" name="photo_url" value="{{ value.photo_url }}" readonly><br>
+                                <img class="user-photo" src="{{ value.photo_url }}" alt="Foto de {{ value.nombre }}"><br>
+                            {% endfor %}
+                            <input type="submit" value="Actualizar">
+                        </form>
+                    </div>
                 {% endfor %}
-            </li>
-        {% endfor %}
-    </ul>
+            {% else %}
+                <p>No se encontraron usuarios.</p>
+            {% endif %}
+        </div>
+        
+        <div class="total-usuarios">
+            Total de usuarios: {{ total_usuarios }}
+        </div>
+    </div>
 </body>
 </html>

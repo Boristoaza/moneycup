@@ -4,6 +4,8 @@ from .firebase import auth,storage,db
 from django.http import HttpRequest
 from django.urls import reverse
 
+from django.contrib.auth.decorators import login_required
+
 def hola_mundo(request):
     return HttpResponse("Hola Mundo")
 
@@ -49,15 +51,34 @@ def signup(request):
 
 
 def perfil_usuario(request):
-    resultados = db.child('usuarios').get()
+    buscar = request.GET.get('buscar', '').strip().lower()
     usuarios = []
+    if request.method == "POST":
+        usuario_id = request.POST.get('usuario_id')
+        apodo = request.POST.get('apodo')
+        nombre = request.POST.get('nombre')
+        numero = request.POST.get('numero')
+        photo_url = request.POST.get('photo_url')
+        db.child('usuarios').child(usuario_id).update({
+            'apodo': apodo,
+            'nombre': nombre,
+            'numero': numero,
+            'photo_url': photo_url
+        })
+    resultados = db.child('usuarios').get()
     for doc in resultados.each():
         usuario = {doc.key(): doc.val()}
-        usuarios.append(usuario)
+        if buscar:
+            if any(buscar in str(value).lower() for value in doc.val().values()):
+                usuarios.append(usuario)
+        else:
+            usuarios.append(usuario)
+
     total_usuarios = len(usuarios)
     return render(request, 'perfil_usuario.html', {'usuarios': usuarios, 'total_usuarios': total_usuarios})
 
 
+@login_required
 def perfil(request):
     uid = request.GET.get('uid')
     resultado = db.child('usuarios').child(uid).get()
